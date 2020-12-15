@@ -1,0 +1,91 @@
+affective bipolar disorder	SMHD
+alternating insanity	SMHD
+bd1	me
+bd2	me
+bd 1	me
+bd 2	me
+bdi	me
+bdii	me
+bd i	me
+bd ii	me
+bd-1	me
+bd-2	me
+bd-i	me
+bd-ii	me
+biopolar disorder	SMHD
+bipola	SMHD
+bipolar	SMHD
+bi polar	SMHD
+bi-polar	SMHD
+bipolar1	SMHD
+bipolar 1	SMHD
+bipolar2	SMHD
+bipolar 2	SMHD
+bipolar affective disease	SMHD
+bipolar affective disorder	SMHD
+bipolar affective psychosis	SMHD
+bipolar depression	SMHD
+bipolar diorder	SMHD
+bipolar dis	SMHD
+bipolar disoder	SMHD
+bi polar disorder	SMHD
+bi-polar disorder	SMHD
+bipolar disorder	SMHD
+bipolar disorder nos	SMHD
+bipolar disoreder	SMHD
+bipolari	SMHD
+bipolarii	SMHD
+bi-polar illness	SMHD
+bipolar illness	SMHD
+bipolarism	SMHD
+bipolar mania	SMHD
+bipolar mental disorder	SMHD
+bipolar mood disorder	SMHD
+bipolar personality disorder	SMHD
+bipolars	SMHD
+bipolat	SMHD
+bipoler	SMHD
+bi-poler disorder	SMHD
+bipoloar disorder	SMHD
+bp1	SMHD
+bp2	SMHD
+bpd1	SMHD
+bpd 1	SMHD
+bpd2	SMHD
+bpd 2	SMHD
+bpdii	SMHD
+bpd ii	SMHD
+circular insanity	SMHD
+cyclophrenia	SMHD
+cyclophrenic	SMHD
+cyclothymia	SMHD
+cyclothymia disorder	SMHD
+cyclothymic	SMHD
+cyclothymic dis	SMHD
+cyclothymic disorder	SMHD
+cyclothymic disorders	SMHD
+dipolar	SMHD
+dual-form insanity	SMHD
+insanity of double form	SMHD
+manic depression	SMHD
+manic-depression	SMHD
+manic depression bipolar	SMHD
+manic depressive	SMHD
+manic-depressive	SMHD
+manic depressive disorder	SMHD
+manic-depressive disorder	SMHD
+manic depressive illness	SMHD
+manic-depressive illness	SMHD
+manic-depressive mental disorder	SMHD
+manic-depressive psychoses	SMHD
+manic depressive psychosis	SMHD
+manic-depressive psychosis	SMHD
+manic depressive reaction	SMHD
+pipolar	SMHD
+psychosis manic depressive	SMHD
+psychosis manic-depressive	SMHD
+psychothemia	SMHD
+psychothymia	SMHD
+rapid cycling	SMHD
+rapid cycling bipolar	SMHD
+rapid-cycling bipolar	SMHD
