@@ -4,9 +4,10 @@ import copy
 import os
 import re
 
-from datamodel.span import Span, get_longest_spans
+from span import Span, get_longest_spans
 
-FILTER_FILES_FOLDER = "/mnt/dhr/filtering/"
+# path to folder which contains "condition-terms" subfolder
+FILTER_FILES_FOLDER = "disclosure-patterns"
 
 
 class Filter(object):
@@ -31,7 +32,7 @@ class Filter(object):
             # print(filter)
             # print(text)
             if re.search(filter, text):
-                # print("Matches filter %s" % filter)
+                # print("%s\nmatches %s filter %s" % (text, self.name, filter))
                 return True
         return False
 
@@ -82,12 +83,12 @@ class PhraseFilter(Filter):
         return filters
 
 class InclusionPatternFilter(PhraseFilter):
-    def __init__(self, social_media_name, condition="bipolar"):
-        super(InclusionPatternFilter, self).__init__("include-%s" %condition, get_patterns_file_name(condition, "positive-diagnosis", social_media_name))
+    def __init__(self, condition="bipolar"):
+        super(InclusionPatternFilter, self).__init__("include-%s" %condition, get_patterns_file_name(condition, "inclusion"))
 
 class ExclusionPatternFilter(PhraseFilter):
-    def __init__(self, social_media_name, condition="bipolar"):
-        super(ExclusionPatternFilter, self).__init__("exclude-%s" %condition, get_patterns_file_name(condition, "negative-diagnosis", social_media_name))
+    def __init__(self, condition="bipolar"):
+        super(ExclusionPatternFilter, self).__init__("exclude-%s" %condition, get_patterns_file_name(condition, "exclusion"))
 
 class TermFilter(Filter):
     """
@@ -131,10 +132,10 @@ class DiagnosisFilter(TermFilter):
 class ConditionFilter(TermFilter):
     def __init__(self, condition):
         super(ConditionFilter, self).__init__(condition, os.path.join(FILTER_FILES_FOLDER,
-                                                                      "condition-filter-terms/%s-filter-terms.txt" %(condition)))
+                                                                      "condition-terms/%s-filter-terms.txt" %(condition)))
 
 class BipolarFilter(ConditionFilter):
-    def __init__(self, social_media_name):
+    def __init__(self):
         super(BipolarFilter, self).__init__("bipolar")
 
 def read_filter_list(filter_file, ignore_case=True, has_heading=True, only_first_column=True):
@@ -183,58 +184,33 @@ def expand_patterns_with(filter_file):
         f.write("\n".join(filters_with_expanded))
 
 
-def build_self_reported_diagnosis_patterns(name, condition, social_media_name):
+def build_self_reported_diagnosis_patterns(name, condition):
     """
-
-    :param name: positive-diagnosis or negative-diagnosis
-    :param social_media_name: twitter or reddit
+    :param name: inclusion or exclusion
     :param condion: currently bipolar and psychotic-disorder supported
     :return:
     """
     doctor_expansions = read_filter_list(
-        os.path.join(FILTER_FILES_FOLDER, "doctor-expansion-terms.txt"), has_heading=False, only_first_column=False)
+        os.path.join(FILTER_FILES_FOLDER, "professional-expansion-terms.txt"), has_heading=False, only_first_column=False)
 
     condition_expansions = read_filter_list(
-        os.path.join(FILTER_FILES_FOLDER, "condition-filter-terms/%s-filter-terms.txt" % (condition)), has_heading = False)
+        os.path.join(FILTER_FILES_FOLDER, "condition-terms/%s-filter-terms.txt" % (condition)), has_heading = False)
 
     referent_expansions = []
-    if name == "negative-diagnosis":
+    if name == "exclusion":
         referent_expansions = read_filter_list(
             os.path.join(FILTER_FILES_FOLDER, "referent-expansion-terms.txt"), has_heading=False,
             only_first_column=False)
 
-    expansions = {"_doctor": doctor_expansions, "_condition": condition_expansions, "_ref": referent_expansions}
+    expansions = {"_professional": doctor_expansions, "_condition": condition_expansions, "_ref": referent_expansions}
 
     diagnosis_patterns = read_filter_list(
-        os.path.join(FILTER_FILES_FOLDER, "%s-patterns_%s.txt" % (name, social_media_name)), has_heading=False,
+        os.path.join(FILTER_FILES_FOLDER, "%s-patterns.txt" % (name)), has_heading=False,
         only_first_column=False)
     diagnosis_patterns = expand_patterns_with_placeholders(diagnosis_patterns, expansions)
 
-    # if name == "negative-diagnosis":
-    #     psychotic_disorder_filter_terms =  read_filter_list(
-    #     os.path.join(FILTER_FILES_FOLDER, "psychotic-disorder-filter-terms.txt"))
-    #     diagnosis_patterns.extend(psychotic_disorder_filter_terms)
-
-    with open(get_patterns_file_name(condition, name, social_media_name), "w") as f:
+    with open(get_patterns_file_name(condition, name), "w") as f:
         f.write("\n".join(diagnosis_patterns))
-
-def build_exclusion_patterns(condition, social_media_name):
-    """
-    matches patterns where user states having no diagnosis or self-diagnosing;
-    exclusion-patterns contain manually filtered subset of negative-diagnosis-patterns without _ref having diagnosis
-    :param condition:
-    :param social_media_name:
-    :return:
-    """
-    exclusion_patterns = read_filter_list(
-        os.path.join(FILTER_FILES_FOLDER, "exclusion-patterns.txt"), has_heading=False,
-        only_first_column=False)
-    condition_expansions = read_filter_list(
-        os.path.join(FILTER_FILES_FOLDER, "condition-filter-terms/%s-filter-terms.txt" % (condition)), has_heading=False)
-    exclusion_patterns = expand_patterns_with_placeholders(exclusion_patterns, {"_condition": condition_expansions})
-    with open(get_patterns_file_name(condition, "exclusion", social_media_name), "w") as f:
-        f.write("\n".join(exclusion_patterns))
-
 
 def _substitute_placeholders(text, placeholders, results):
     # print("Call substitute place holders with text %s, results %s" % (text, str(results)))
@@ -274,12 +250,12 @@ def expand_patterns_with_placeholders(patterns, expansions):
     print ("Expanded %d patterns to %d patterns" % (len(patterns), len(patterns_placeholder_extended)))
     return patterns_placeholder_extended
 
-def get_patterns_file_name(condition, name, social_media_name):
-    return os.path.join(FILTER_FILES_FOLDER, "expanded-diagnosis-patterns/%s-%s-patterns_%s.txt" % (condition, name, social_media_name))
+def get_patterns_file_name(condition, name):
+    return os.path.join(FILTER_FILES_FOLDER, "expanded-diagnosis-patterns/%s-%s-patterns.txt" % (condition, name))
 
-def compute_minimum_distance_inclusion_pattern_condition_term(included_posts, social_media_name):
-    inclusion_pattern_filter = InclusionPatternFilter(social_media_name)
-    condition_terms_filter = BipolarFilter(social_media_name)
+def compute_minimum_distance_inclusion_pattern_condition_term(included_posts):
+    inclusion_pattern_filter = InclusionPatternFilter()
+    condition_terms_filter = BipolarFilter()
 
     for post in included_posts:
         post.add_inclusion_pattern_spans(inclusion_pattern_filter)

@@ -1,3 +1,27 @@
+# -*- coding: utf-8 -*-
+import unicodedata
+import re
+import nltk
+
+tokenizer = nltk.tokenize.TweetTokenizer()
+
+# conversion based on https://stackoverflow.com/questions/10294032/python-replace-typographical-quotes-dashes-etc-with-their-ascii-counterparts
+def _get_unicode_character_name(char):
+    try:
+        return unicodedata.name(char)
+    except ValueError:
+        return None
+
+def _get_all_unicode_non_ascii_characters():
+    # Generate all Unicode characters with their names
+    all_unicode_characters = []
+    for n in range(128, 0x10ffff):  # Unicode planes 0-16
+        char = chr(n)
+        name = _get_unicode_character_name(char)
+        if name:
+            all_unicode_characters.append((char, name))
+    return all_unicode_characters
+
 def _build_unicode_to_ascii_normalisation_dict():
     unicode_to_ascii_normalisazion_dict = {}
     all_unicode_characters = _get_all_unicode_non_ascii_characters()
@@ -37,7 +61,9 @@ UNICODE_TO_ASCII_NORMALISATION_DICT = _build_unicode_to_ascii_normalisation_dict
 
 def normalise_unicode_to_ascii(text):
     text = str(text)
+    # print("Original text\n%s" %text)
     text = text.translate(UNICODE_TO_ASCII_NORMALISATION_DICT)
+    # print("ASCII text\n%s" %text)
 
     return text
 
@@ -56,3 +82,6 @@ def remove_reddit_quotes(text, remove_in_line_quotes=False):
                 line = quoted_text.sub("", line)
             user_lines.append(line)
     return "\n".join(user_lines)
+
+def tokenize(text):
+    return " ".join(tokenizer.tokenize(text))
