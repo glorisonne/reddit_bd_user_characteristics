@@ -1,7 +1,5 @@
-import json
-
-from post import RedditPost, RedditComment, RedditSubmission
-import filter, config
+from post import RedditComment, RedditSubmission
+import filter, config, util
 
 def get_post_objects(json_posts, type):
     if type == "submission":
@@ -58,7 +56,7 @@ def detect_disclosures(json_file, type, diagnosis):
 
     diagnosis_posts_fname = "%s%s_%ss_diagnosis_post_ids.txt" % (config.output, diagnosis, type)
     with open(diagnosis_posts_fname, "w") as f:
-        f.write("\n".join(["%d\t%s" %(post.id, post.user_name) for post in diagnosis_posts]))
+        f.write("\n".join(["%s\t%s" %(post.id, post.user_name) for post in diagnosis_posts]))
 
     print("Identified %d self-reported %s diagnosis posts out of %d %ss" %(len(diagnosis_posts), diagnosis, len(posts),\
                                                                            type))

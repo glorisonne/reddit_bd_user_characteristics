@@ -2,6 +2,7 @@
 import unicodedata
 import re
 import nltk
+import json
 
 tokenizer = nltk.tokenize.TweetTokenizer()
 

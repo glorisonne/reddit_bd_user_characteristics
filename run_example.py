@@ -3,8 +3,8 @@ import filter, config, detect_diagnosis_disclosures as d, extract_dob_gender
 submissions_json = config.data + "submissions-example.json"
 comments_json = config.data + "comments-example.json"
 
-run_build_diagnosis_patterns = False
-run_identify_diagnoses = False
+run_build_diagnosis_patterns = True
+run_identify_diagnoses = True
 run_extract_dob_gender = True
 
 # build self-reported diagnosis patterns
