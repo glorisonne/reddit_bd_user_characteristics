@@ -5,6 +5,13 @@ import nltk
 
 tokenizer = nltk.tokenize.TweetTokenizer()
 
+def read_json(fname):
+    with open(fname, encoding="utf-8") as f:
+        json_posts = json.load(f)
+
+    print("Read in %d posts from %s" % (len(json_posts), fname))
+    return json_posts
+
 # conversion based on https://stackoverflow.com/questions/10294032/python-replace-typographical-quotes-dashes-etc-with-their-ascii-counterparts
 def _get_unicode_character_name(char):
     try:

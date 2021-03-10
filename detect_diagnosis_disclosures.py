@@ -1,16 +1,7 @@
-import sys
-import util
 import json
 
 from post import RedditPost, RedditComment, RedditSubmission
-import filter
-
-def read_json(fname):
-    with open(json_file, encoding="utf-8") as f:
-        json_posts = json.load(f)
-
-    print("Read in %d posts from %s" % (len(json_posts), fname))
-    return json_posts
+import filter, config
 
 def get_post_objects(json_posts, type):
     if type == "submission":
@@ -53,28 +44,21 @@ def identify_self_reported_diagnosis_statements(posts, diagnosis):
     return self_reported_diagnosis_posts, posts
 
 def detect_disclosures(json_file, type, diagnosis):
-    json_posts = read_json(json_file)
+    json_posts = util.read_json(json_file)
     posts = get_post_objects(json_posts, type)
 
     # get only self-reported diagnosis posts
     diagnosis_posts, posts = identify_self_reported_diagnosis_statements(posts, diagnosis)
 
     # print the ids of posts that were detected to be a self-reported diagnosis
-    posts_fname = "%s_%ss_posts_marked_up.txt" %(diagnosis, type)
+    posts_fname = "%s%s_%ss_posts_marked_up.txt" %(config.output, diagnosis, type)
     with open(posts_fname, "w") as f:
         for post in posts:
             f.write("%s\t%s\n" %(post.id, post.get_text_marked_up_spans()))
 
-    diagnosis_posts_fname = "%s_%ss_diagnosis_post_ids.txt" % (diagnosis, type)
+    diagnosis_posts_fname = "%s%s_%ss_diagnosis_post_ids.txt" % (config.output, diagnosis, type)
     with open(diagnosis_posts_fname, "w") as f:
-        f.write("\n".join([post.id for post in diagnosis_posts]))
+        f.write("\n".join(["%d\t%s" %(post.id, post.user_name) for post in diagnosis_posts]))
 
     print("Identified %d self-reported %s diagnosis posts out of %d %ss" %(len(diagnosis_posts), diagnosis, len(posts),\
                                                                            type))
-
-
-if __name__ == '__main__':
-    json_file = sys.argv[1]
-    type = sys.argv[2]  # submission or comment
-    diagnosis = sys.argv[3] # bipolar, schizophrenia, etc.
-    detect_disclosures(json_file, type, diagnosis)
