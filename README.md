@@ -3,7 +3,7 @@
 Identify Reddit users with a self-reported Bipolar Disorder Diagnosis and profile their user characteristics
 
 ## Requirements
-unicodedata, re, nltk
+python 3.8 unicodedata, re, nltk
 
 ## Folder structure
 The data/ folder contains examples (paraphrased from real posts) for submissions and comments.
