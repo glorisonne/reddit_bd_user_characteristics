@@ -1,6 +1,6 @@
 # Code accompanying the paper "Understanding who uses Reddit: Profiling individuals with a self-reported bipolar disorder diagnosis"
 
-Identify Reddit users with a self-reported Bipolar Disorder Diagnosis and profile their user characteristics
+Identify Reddit users with a self-reported bipolar disorder diagnosis and profile their user characteristics
 
 ## Requirements
 python 3.8, nltk 3.5, pandas 1.2.3
