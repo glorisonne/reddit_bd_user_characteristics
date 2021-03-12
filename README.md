@@ -1,6 +1,6 @@
 # Code accompanying the paper "Understanding who uses Reddit: Profiling individuals with a self-reported bipolar disorder diagnosis"
 
-Identify Reddit users with a self-reported Bipolar Disorder Diagnosis and profile their user characteristics
+Identify Reddit users with a self-reported bipolar disorder diagnosis and profile their user characteristics
 
 ## Requirements
 python 3.8, nltk 3.5, pandas 1.2.3
@@ -15,14 +15,13 @@ The disclosure-patterns/ folder contains self-reported diagnosis patterns and me
 
 ## Code
 
-1) Identify self-reported diagnosis posts
-a) Build patterns:
-For each diagnosis (CONDITION), CONDITION_inclusion-patterns.txt and CONDITION_exclusion-patterns.txt
-are saved to /disclosure-patterns/expanded-diagnosis-patterns/
-b) Apply patterns:
-Prints post.id \t post.user_name to one file for each diagnosis and input file to the output/ folder
+1. Identify self-reported diagnosis posts
 
-2) Extract self-reported age and gender
+  + Build patterns: For each diagnosis (CONDITION), CONDITION_inclusion-patterns.txt and CONDITION_exclusion-patterns.txt are saved to /disclosure-patterns/expanded-diagnosis-patterns/
+  
+  + Apply patterns: Prints post.id \t post.user_name to one file for each diagnosis and input file to the output/ folder
+
+2. Extract self-reported age and gender
 Extracts self-reported age and gender from submission titles, writes results to output/users_age_gender.csv
 
 Run all steps on example data (demonstrates code usage):
