@@ -1,6 +1,19 @@
-# Code accompanying the paper "Understanding who uses Reddit: Profiling individuals with a self-reported bipolar disorder diagnosis"
+# Code accompanying the paper "Understanding who uses Reddit: Profiling individuals with a self-reported bipolar disorder diagnosis" (CLPsych workshop @NAACL 2021)
 
-Identify Reddit users with a self-reported bipolar disorder diagnosis and profile their user characteristics
+Purpose: Identify Reddit users with a self-reported bipolar disorder diagnosis and profile their user characteristics
+
+## Citation
+To refer to this work, please cite the following paper:
+
+```
+@inproceedings{
+author = {Jagfeld, Glorianna and Lobban, Fiona and Rayson, Paul and Jones, Steven H.},
+booktitle = {Proceedings of the Seventh Workshop on Computational Linguistics and Clinical Psychology: Improving Access
+at NAACL 2021},
+title = {{Understanding who uses Reddit: Profiling individuals with a self-reported bipolar disorder diagnosis}},
+year = {2021}
+}
+```
 
 ## Requirements
 python 3.8, nltk 3.5, pandas 1.2.3
