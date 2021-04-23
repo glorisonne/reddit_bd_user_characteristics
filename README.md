@@ -15,6 +15,9 @@ year = {2021}
 }
 ```
 
+## Visual summary of the results
+![alt text](https://github.com/glorisonne/reddit_bd_user_characteristics/blob/master/GraphicalAbstract.png?raw=true)
+
 ## Requirements
 python 3.8, nltk 3.5, pandas 1.2.3
 
