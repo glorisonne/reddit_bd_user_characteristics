@@ -38,6 +38,7 @@ The disclosure-patterns/ folder contains self-reported diagnosis patterns and me
   + Apply patterns: Prints post.id \t post.user_name to one file for each diagnosis and input file to the output/ folder
 
 2. Extract self-reported age and gender
+
 Extracts self-reported age and gender from submission titles, writes results to output/users_age_gender.csv
 
 Run all steps on example data (demonstrates code usage):
